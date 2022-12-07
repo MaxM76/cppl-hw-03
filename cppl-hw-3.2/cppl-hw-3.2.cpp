@@ -76,20 +76,14 @@ public:
 		return size;
 	}
 
-	int getNewIndex() {
-		return newIndex;
-	}
-	
 	smart_array& operator=(smart_array& other) {
-		for (int i = 0; i < newIndex + 1; i++) {
-			if (i < other.getNewIndex()) {
-				array[i] = other.get_element(i);
-			}
-			else {
-				array[i] = 0;
-			}
+		delete[] array;
+		size = other.getSize();
+		array = new int[size];
+		for (int i = 0; i < size; i++) {
+			array[i] = other.get_element(i);			
 		}
-		newIndex = other.getNewIndex();
+		newIndex = size;
 		return *this;
 	}
 };
@@ -111,23 +105,33 @@ int main()
     new_array.add_element(34);
 
 	std::cout << "First array\n";
-	for (int i = 0; i < arr.getNewIndex(); i++) {
+	for (int i = 0; i < arr.getSize(); i++) {
 		std::cout << arr.get_element(i) << "\t";
 	}
 	std::cout << "\n";
 
 	std::cout << "Second array\n";
-	for (int i = 0; i < new_array.getNewIndex(); i++) {
+	for (int i = 0; i < new_array.getSize(); i++) {
 		std::cout << new_array.get_element(i) << "\t";
 	}
 	std::cout << "\n";
 
-
+	
 	arr = new_array;
 
 	std::cout << "Result of =\n";
-	for (int i = 0; i < arr.getNewIndex(); i++) {
+	for (int i = 0; i < arr.getSize(); i++) {
 		std::cout << arr.get_element(i) << "\t";
 	}
 	std::cout << "\n";
+	
+	/*
+	new_array = arr;
+
+	std::cout << "Result of =\n";
+	for (int i = 0; i < new_array.getSize(); i++) {
+		std::cout << new_array.get_element(i) << "\t";
+	}
+	std::cout << "\n";
+	*/
 }
